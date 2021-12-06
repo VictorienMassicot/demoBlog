@@ -1,0 +1,42 @@
+{% extends "base.html.twig" %}
+
+{# Ce block title fait référence au block 'title' déclaré dans base.html.twig #}
+{% block title %}
+    Template home
+{% endblock %}
+
+{# Ce block body fait référence au block 'body' déclaré dans base.html.twig #}
+{% block body %}
+
+    {# 
+    title est une variable twig qui ne sort pas de nul part, elle provient du controller BlogController et plus précisément de la méthode 'render', cette dernière est définie dans la méthode home() 
+
+    Tout ce qui est traité dans les templates vient forcement d'un controller
+
+    TWIG est un langage de rendu, un moteur de template avec divers avantages :
+    - Simplicité du langage
+    - Absence de PHP au sein de l'affichage
+    - Plus simple pour un intégrateur
+    - Plus rapide à l'éxecution
+
+    {{ }} --> interpolation
+    {% %} --> commande (cmd ex: if/else | for/endfor)
+    #}
+
+    <h1 class="text-center my-5">{{ title }}</h1>
+
+    {% if age >= 18 %}
+        <p>Tu es majeur !</p>
+    {% else %}
+        <p>Tu es mineur !</p>
+    {% endif %}
+
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad maiores porro laborum esse obcaecati autem natus modi, praesentium voluptatem temporibus, similique delectus totam sed deserunt dolores sit laudantium vel quisquam facilis impedit ipsa amet veniam. Aut, odit eaque? Commodi animi quia ducimus, ratione labore corporis molestiae dicta consequatur dignissimos, ullam illum non minus deleniti accusantium sunt aut et dolorem aspernatur quibusdam. Sunt iusto enim dolorem, deserunt accusantium vel aut itaque ea sit error libero harum tempora, corrupti, voluptatem sapiente saepe voluptatibus! At sed, iure nostrum impedit obcaecati dolor eius. Labore quae quod facilis repellendus, dignissimos voluptate veritatis delectus quisquam dolor!</p>
+
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad maiores porro laborum esse obcaecati autem natus modi, praesentium voluptatem temporibus, similique delectus totam sed deserunt dolores sit laudantium vel quisquam facilis impedit ipsa amet veniam. Aut, odit eaque? Commodi animi quia ducimus, ratione labore corporis molestiae dicta consequatur dignissimos, ullam illum non minus deleniti accusantium sunt aut et dolorem aspernatur quibusdam. Sunt iusto enim dolorem, deserunt accusantium vel aut itaque ea sit error libero harum tempora, corrupti, voluptatem sapiente saepe voluptatibus! At sed, iure nostrum impedit obcaecati dolor eius. Labore quae quod facilis repellendus, dignissimos voluptate veritatis delectus quisquam dolor!</p>
+
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad maiores porro laborum esse obcaecati autem natus modi, praesentium voluptatem temporibus, similique delectus totam sed deserunt dolores sit laudantium vel quisquam facilis impedit ipsa amet veniam. Aut, odit eaque? Commodi animi quia ducimus, ratione labore corporis molestiae dicta consequatur dignissimos, ullam illum non minus deleniti accusantium sunt aut et dolorem aspernatur quibusdam. Sunt iusto enim dolorem, deserunt accusantium vel aut itaque ea sit error libero harum tempora, corrupti, voluptatem sapiente saepe voluptatibus! At sed, iure nostrum impedit obcaecati dolor eius. Labore quae quod facilis repellendus, dignissimos voluptate veritatis delectus quisquam dolor!</p>
+    
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad maiores porro laborum esse obcaecati autem natus modi, praesentium voluptatem temporibus, similique delectus totam sed deserunt dolores sit laudantium vel quisquam facilis impedit ipsa amet veniam. Aut, odit eaque? Commodi animi quia ducimus, ratione labore corporis molestiae dicta consequatur dignissimos, ullam illum non minus deleniti accusantium sunt aut et dolorem aspernatur quibusdam. Sunt iusto enim dolorem, deserunt accusantium vel aut itaque ea sit error libero harum tempora, corrupti, voluptatem sapiente saepe voluptatibus! At sed, iure nostrum impedit obcaecati dolor eius. Labore quae quod facilis repellendus, dignissimos voluptate veritatis delectus quisquam dolor!</p>
+
+{% endblock %}
