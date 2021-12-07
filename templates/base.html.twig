@@ -4,10 +4,15 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="">
-        <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+        <meta name="description" content="Mon premier blog Symfony">
+        <meta name="author" content="Victorien MASSICOT">
         <meta name="generator" content="Hugo 0.88.1">
-        <title>Blog Template · Bootstrap v5.1</title>
+
+        <title>
+        {% block title %}
+            Blog Symfony
+        {% endblock %}
+        </title>
 
         <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/blog/">
 
@@ -67,7 +72,7 @@
 
             <div class="nav-scroller py-1 mb-2">
                 <nav class="nav d-flex justify-content-between">
-                <a class="p-2 link-secondary" href="#">World</a>
+                <a class="p-2 link-secondary" href="{{ path('blog_create') }}">Ajout article</a>
                 <a class="p-2 link-secondary" href="#">U.S.</a>
                 <a class="p-2 link-secondary" href="#">Technology</a>
                 <a class="p-2 link-secondary" href="#">Design</a>
@@ -86,8 +91,8 @@
         <main class="container conteneur-front">
         <div class="p-4 p-md-5 mb-4 text-white rounded bg-dark">
             <div class="col-md-6 px-0">
-                <h1 class="display-4 fst-italic">Title of a longer featured blog post</h1>
-                <p class="lead my-3">Multiple lines of text that form the lede, informing new readers quickly and efficiently about what’s most interesting in this post’s contents.</p>
+                <h1 class="display-4 fst-italic">Hub des postes</h1>
+                <p class="lead my-3">Vous trouverez une liste de tous les postes dans leur ordre de publication</p>
                 <p class="lead mb-0"><a href="{{ path('blog') }}" class="text-white fw-bold">Accès au blog</a></p>
             </div>
         </div>
@@ -100,7 +105,6 @@
         
 
         <footer class="blog-footer">
-            <p>Blog template built for <a href="https://getbootstrap.com/">Bootstrap</a> by <a href="https://twitter.com/mdo">@mdo</a>.</p>
             <p>&copy; Victorien MASSICOT, Tous droits reservés </p>
         </footer>
 
