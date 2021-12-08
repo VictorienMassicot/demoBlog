@@ -10,9 +10,23 @@
 
         {# {{ dump(articles) }} #}
 
+    {# Affichage des messages utilisateurs stockés en session (addFlash() dans le controller) #}
+    {# app: objet twig qui contient toute les informations de la session en cours #}
+    {% for message in app.flashes('success') %}
+        <div class="col-6 mx-auto text-center bg-success p-3 rounded text-white mb-3">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    {% if articles.photo != null %}
+        {% set col = 8 %}
+    {% else %}
+        {% set col = 12 %}
+    {% endif %}
+
     <div class="col-md-12">
         <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm position-relative">
-            <div class="col p-4 d-flex flex-column position-static">
+            <div class="col-{{ col }} p-4 d-flex flex-column position-static">
                 <strong class="d-inline-block mb-2 text-primary">Design</strong>
                 <h3 class="mb-0">{{ articles.titre }}</h3>
                 <div class="mb-1 text-muted">Publié le {{ articles.date|date('Y-m-d') }}</div>
@@ -24,9 +38,16 @@
                     <a href="#" class="btn btn-dark">Supprimer</a>
                 </p>
             </div>
-            <div class="col-auto d-none d-lg-block">
-                <img src="{{ articles.photo|replace({'300/350': '200/300'}) }}" alt="Picsum">
-            </div>
+
+            {% if articles.photo != null %}
+
+                <div class="col-4 d-none d-lg-block">
+                    <img src="{{ asset('uploads/photos/' ~ articles.photo)  }}" alt="{{ articles.titre }}">
+                </div>
+
+            {% endif %}
+            
+
         </div>
     </div>
 
