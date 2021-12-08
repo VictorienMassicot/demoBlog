@@ -16,22 +16,31 @@
     {# {{ dump(data) }} #}
 
     <div class="col-md-6">
-        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-            <div class="col p-4 d-flex flex-column position-static">
+        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm position-relative card-blog">
+
+            {% if data.photo != null %}
+                {% set col = 8 %}
+            {% else %}
+                {% set col = 12 %}
+            {% endif %}
+            <div class="col-{{ col }} p-4 d-flex flex-column position-static">
                 <strong class="d-inline-block mb-2 text-primary">World</strong>
                 <h3 class="mb-0">{{ data.titre }}</h3>
                 <small class="mb-1 text-muted">Publié le {{ data.date|date("Y-m-d") }}</small>
-                <p class="card-text mb-auto">{{ data.contenu|slice(0, 100)|striptags }} ...</p>
+                <p class="card-text mb-auto">{{ data.contenu|slice(0, 40)|striptags }} ...</p>
 
                 {# On fournit à la route l'id de l'article à transmettre dans l'url #}
                 {# la route 'blog_show' est une route paramétrée, on doit lui transmettre un id dans l'URl #}
                 <a href="{{ path('blog_show', {'id': data.id}) }}" class="stretched-link">Lire la suite</a>
             </div>
-            <div class="col-auto d-none d-lg-block">
 
-                {# replace() : fonction twig permettant permettant de remplacer un élément dans une chaine de caractères #}
-                <img src="{{ data.photo|replace({'300/350': '200/250'}) }}" alt="{{ data.titre }}">
-            </div>
+            {% if data.photo != null %}
+                <div class="col-4 d-none d-lg-block">
+                    {# replace() : fonction twig permettant permettant de remplacer un élément dans une chaine de caractères #}
+                    <img src="{{ asset('uploads/photos/' ~ data.photo) }}" alt="{{ data.titre }}" class="col-12 img-responsive">
+                </div>
+            {% endif %}
+
         </div>
     </div>
 
