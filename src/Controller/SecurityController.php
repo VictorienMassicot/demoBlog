@@ -14,9 +14,10 @@ class SecurityController extends AbstractController
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
-        // if ($this->getUser()) {
-        //     return $this->redirectToRoute('target_path');
-        // }
+        if($this->getUser())
+        {
+            return $this->redirectToRoute('blog');
+        }
 
         // renvoie un message d'erreur si jamais nous avons saisi les mauvais identifiants pour la connexion
         $error = $authenticationUtils->getLastAuthenticationError();
