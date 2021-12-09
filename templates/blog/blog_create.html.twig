@@ -41,6 +41,8 @@
     {# form_start(), form_end(): fonction twig permettant de mettre en forme et d'afficher le formulaire #}
 
     {{ form_start(form_article) }}
+
+        {{ form_row(form_article.category) }}
         
         {{ form_row(form_article.titre) }}
 

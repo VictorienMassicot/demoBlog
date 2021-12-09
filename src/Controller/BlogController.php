@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Form\ArticleType;
+use App\Form\CommentsType;
+use App\Entity\Commentaire;
 use App\Repository\ArticleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
@@ -66,8 +68,6 @@ class BlogController extends AbstractController
     {
         // La classe request de Symfony contient toute les données véhiculées par les super globales ($_GET, $_POST, $_SERVER, $_COOKIE etc...)
         // $request->request : la propriété 'request' de l'objet $request contient toute les données de $_POST
-
-        
 
         /*
 
@@ -197,7 +197,7 @@ class BlogController extends AbstractController
     // Méthode permettant d'afficher le détail d'un article
     // On définit une route 'paramétrée' {id}, ici la route permet de recevoir l'id d'un article stocké en BDD
     #[Route('/blog/{id}', name: 'blog_show')]
-    public function blogShow(Article $article): Response
+    public function blogShow(Article $article, Request $request, EntityManagerInterface $manager): Response
     {
         /*
             Ici, nous envoyons un ID dans l'url et nous imposons en argument un objet issu de l'entité Article donc la table SQL
@@ -209,11 +209,37 @@ class BlogController extends AbstractController
         // $articles = $repoArticle->find($id);
 
         // l'id dans la route '/blog/12' est transmit automatiquement en argument de la méthode BlogShow($id) dans la variable réception $id
-        // dd($articles); // 12
+        // dd($article); // 12
+
+        // cette méthode mise à disposition retourne un objet App\Entity\Article contenant toute les données de l'utilisateur authentifié sur le site
+        $user = $this->getUser();
+        // dd($user);
+
+        $comments = new Commentaire;
+
+        $formComments = $this->createForm(CommentsType::class, $comments);
+
+        $formComments->handleRequest($request);
+
+        if($formComments->isSubmitted() && $formComments->isValid())
+        {
+            $comments->setDate(new \DateTime());
+
+            $comments->setArticle($article);
+
+            $manager->persist($comments);
+            $manager->flush();
+
+            $this->addFlash('success', "Félicitations ! Votre commentaire a bien été posté");
+
+            return $this->redirectToRoute('blog_show', [
+                'id' => $article->getId()
+            ]);
+        }
+
         return $this->render('blog/blog_show.html.twig', [
-            'articles' => $article
+            'articles' => $article,
+            'formComments' => $formComments->createView()
         ]);
     }
-
-     
 }
