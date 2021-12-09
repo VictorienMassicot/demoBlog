@@ -57,7 +57,7 @@
                     <div class="col-4 pt-1">
                         {# si app.user retourne true, cela veut dire que l'internaute est identifié, on entre dans le IF #}
                         {% if app.user %}
-                            <a href="" class="link-secondary" title="Accès à votre compte"><span>Bonjour <strong>{{ app.user.prenom }}</strong> <strong>{{ app.user.nom }}</strong></span></a>
+                            <a href="{{ path('app_profil') }}" class="link-secondary" title="Accès à votre compte"><span>Bonjour <strong>{{ app.user.prenom }}</strong> <strong>{{ app.user.nom }}</strong></span></a>
                         {% else %}
                             <a class="link-secondary" href="{{ path('app_register') }}">Créer votre compte</a>
                         {% endif %}
@@ -70,6 +70,10 @@
                         <a class="link-secondary" href="#" aria-label="Search">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="mx-3" role="img" viewBox="0 0 24 24"><title>Search</title><circle cx="10.5" cy="10.5" r="7.5"/><path d="M21 21l-5.2-5.2"/></svg>
                         </a>
+
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <a class="btn btn-sm btn-outline-secondary me-2" href="{{ path('app_admin') }}">BACKOFFICE</a>
+                        {% endif %}
 
                         {% if app.user %}
                             <a class="btn btn-sm btn-outline-secondary" href="{{ path('app_logout') }}">Déconnexion</a>

@@ -1,0 +1,51 @@
+{% extends "base_admin.html.twig" %}
+
+{% block title %}
+    Blog Symfony | Gestion des articles
+{% endblock %}
+
+{% block body %}
+
+    {# {{ dump(colonnes) }} #}
+
+    <table class="table table-striped">
+        <tr>
+        {# colonnes: objet (BackOfficeController) qui contient tous les noms des champs/colonnes de la table sql Article #}
+        {% for data in colonnes %}
+
+            {% if data != 'id' %}
+                
+                {# capitalize: filtre Twig permettant de mettre la 1ère lettre de la chaine en majuscule #}
+                <th class="text-center">{{ data|capitalize }}</th>
+
+            {% endif %}
+
+        {% endfor %}
+            <th class="text-center">Cat.</th>
+            <th class="text-center">Nb Comm.</th>
+            <th class="text-center">Action</th>
+        </tr>
+        {% for art in articles %}
+
+            <tr class="text-center">
+                <td>{{ art.titre }}</td>
+                <td>{{ art.contenu|striptags|slice(0, 60) }}...</td>
+                <td>
+                    {% if art.photo != null %}
+                        <img src="{{ asset('uploads/photos/' ~ art.photo) }}" alt="" class="col-3 img-responsive">
+                    {% endif %}                
+                </td>
+                <td>{{ art.date|date("Y-m-d") }}</td>
+                <td>{{ art.category.titre }}</td>
+                <td>{{ art.commentaires|length }}</td>
+                <td>
+                    <a href="" class="badge"><i class="bi bi-pencil-fill text-success" style="font-size: 24px !important;"></i></a>&nbsp;
+                    <a href="" class="badge"><i class="bi bi-trash-fill text-danger"  style="font-size: 24px !important;"></i></a>
+                </td>
+
+            </tr>
+            
+        {% endfor %}
+    </table>
+
+{% endblock %}

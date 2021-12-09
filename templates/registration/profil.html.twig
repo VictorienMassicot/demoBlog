@@ -1,0 +1,40 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+    Blog Symfony | Profil
+{% endblock %}
+
+{% block body %}
+    
+<h1 class="display-4 text-center mt-2 mb-5">Profil</h1>
+
+
+
+{# {{ dump(user) }} #}
+
+<div class="card p-5 container border shadow-sm col-6 mx-auto">
+
+    <h3 class="text-center">Vos informations</h3>
+
+    <hr class="w-50 mx-auto mb-3 my-0">
+
+    {% if user.roles.0 == 'ROLE_ADMIN' %}
+        <p class="text-center text-secondary mb-2">Vous êtes connecté en tant qu'ADMINISTRATEUR</p>
+    {% endif %}
+
+    <div class="my-1">Email : {{ user.email }}</div>
+
+    <div class="my-1">Prenom : {{ user.prenom }}</div>
+
+    <div class="my-1">Nom : {{ user.nom }}</div>
+
+    <div class="my-1">Adresse : {{ user.adresse }}</div>
+
+    <div class="my-1">Ville : {{ user.ville }}</div>
+
+    <div class="my-1">Code postal : {{ user.codePostal }}</div>
+
+
+</div>
+
+{% endblock %}
