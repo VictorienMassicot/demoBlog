@@ -9,6 +9,8 @@
 
 <div class="row mb-2">
 
+{# {{ dump(articles) }} #}
+
 {# cet objet 'articles' ne sort pas de nul part, c'est ce que le controller a transmit au template, c'est à dire à l'ensemble des articles selectionnés en BDD #}
 {% for data in articles %}
 
@@ -24,7 +26,7 @@
                 {% set col = 12 %}
             {% endif %}
             <div class="col-{{ col }} p-4 d-flex flex-column position-static">
-                <strong class="d-inline-block mb-2 text-primary">World</strong>
+                <strong class="d-inline-block mb-2 text-primary">{{ data.category.titre }}</strong>
                 <h3 class="mb-0">{{ data.titre }}</h3>
                 <small class="mb-1 text-muted">Publié le {{ data.date|date("Y-m-d") }}</small>
                 <p class="card-text mb-auto">{{ data.contenu|slice(0, 40)|striptags }} ...</p>
