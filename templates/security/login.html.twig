@@ -10,7 +10,7 @@
         <div class="bg-danger text-white p-3 rounded text-center col-3 mx-auto my-3">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
 
-    {% for message in app.flashes('succes') %}
+    {% for message in app.flashes('success') %}
 
         <div class="col-6 bg-success text-center text-white p-3 mx-auto">
             {{ message }}

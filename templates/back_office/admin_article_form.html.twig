@@ -1,0 +1,35 @@
+{% extends "base_admin.html.twig" %}
+
+{% block title %}
+    Blog Symfony | BO Ajout article
+{% endblock %}
+
+{% block body %}
+
+    <h1 class="text-center">Ajouter un article</h1>
+    
+    {{ form_start(form_article, {'attr': {'class': 'col-6 mx-auto'}}) }}
+
+        {{ form_row(form_article.category) }}
+        
+        {{ form_row(form_article.titre) }}
+
+        {{ form_row(form_article.contenu) }}
+
+        <div class="d-flex align-items-center justify-content-evenly">
+        {{ form_row(form_article.photo, {'attr': {'class': 'col-2 mx-auto'}}) }}
+
+        {# Si photoActuelle retourne TRUE, cela veut dire que l'article possède une photo, c'est une modification, alors on entre dans la condition IF et on affiche la photo actuelle de l'article #}
+        {% if photoActuelle != null %}
+            <div class="d-flex justify-content-center align-items-center">
+                <em class="mx-auto">Image actuelle :</em>
+                <img class="col-4 img-responsive mx-auto" src="{{ asset('uploads/photos/' ~ photoActuelle)  }}" alt="">
+           </div>
+        {% endif %}
+        </div>
+
+        <button type="submit" class="btn btn-dark col-2 d-block mx-auto mt-5">Ajouter</button>
+
+    {{ form_end(form_article) }}
+
+{% endblock %}

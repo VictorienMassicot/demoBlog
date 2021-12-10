@@ -1,0 +1,51 @@
+{% extends "base_admin.html.twig" %}
+
+{% block title %}
+    Blog Symfony | Gestion des utilisateurs
+{% endblock %}
+
+{% block body %}
+
+<pre>
+    {{ dump(colonnes) }}
+</pre>
+    
+    <table class="table table-striped">
+        <tr>
+            {% for data in colonnes %}
+
+                {% if data != 'id' and data != 'password' %}
+
+                    <th class="text-center table-success">{{ data|capitalize }}</th>
+
+                {% endif %}
+                
+
+            {% endfor %}
+            <th class="text-center table-success">Actions</th>
+        </tr>
+        
+
+        {% for user in utilisateurs %}
+
+            <tr class="text-center align-middle">
+
+                <td>{{ user.email }}</td>
+                <td>{{ user.roles[0]|slice(5,10) }}</td>
+                <td>{{ user.prenom }}</td>
+                <td>{{ user.nom }}</td>
+                <td>{{ user.adresse }}</td>
+                <td>{{ user.ville }}</td>
+                <td>{{ user.codePostal }}</td>
+                <td>
+                    <a href="" class="badge"><i class="bi bi-pencil-fill text-success" style="font-size: 24px !important;"></i></a>&nbsp;
+                    <a href="" class="badge"><i class="bi bi-trash-fill text-danger" style="font-size: 24px !important;"></i></a>
+                </td> 
+
+            </tr>
+
+        {% endfor %}
+       
+    </table>
+
+{% endblock %}
