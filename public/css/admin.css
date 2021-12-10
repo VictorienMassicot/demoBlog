@@ -87,3 +87,7 @@ body {
   
   .fw-semibold { font-weight: 600; }
   .lh-tight { line-height: 1.25; }
+
+  #base_admin {
+    overflow-x: hidden !important;
+  }

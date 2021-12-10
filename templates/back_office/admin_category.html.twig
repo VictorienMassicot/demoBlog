@@ -1,0 +1,40 @@
+{% extends "base_admin.html.twig" %}
+
+{% block title %}
+    Blog Symfony | Catégories
+{% endblock %}
+
+{% block body %}
+    
+    <table id="table-category" class="table table-striped">
+        <thead>
+            <tr class="text-center table-success">
+                {% for data in colonnes %}
+                    {% if data != 'id' %}
+                        <th>{{ data|capitalize }}</th>
+                    {% endif %}
+                {% endfor %}
+                <th>Nb. article</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for donnee in category %}
+                {% if donnee != 'id' %}
+
+                    <tr class="text-center">  
+                        <td class="px-5">{{ donnee.titre }}</td>
+                        <td>{{ donnee.description }}</td>
+                        <td>{{ donnee.articles|length }}</td>
+                        <td>
+                            <a href="{{ path('bo_update_article', {'id': donnee.id}) }}" class="badge"><i class="bi bi-pencil-fill text-success" style="font-size: 24px !important;"></i></a>&nbsp;
+                            <a href="{{ path('bo_category_remove', {'id': donnee.id}) }}" onclick="return(confirm('Voulez-vous vraiment supprimer l\'article {{ donnee.id }} ?'));" class="badge"><i class="bi bi-trash-fill text-danger" style="font-size: 24px !important;"></i></a>
+                        </td>
+                    </tr>
+                    
+                {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

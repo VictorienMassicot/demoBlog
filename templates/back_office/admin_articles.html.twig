@@ -6,46 +6,63 @@
 
 {% block body %}
 
+    {# Affichage du message de suppression d'un utilisateur #}
+    {% for messages in app.flashes('success') %}
+        <div class="col-6 mx-auto text-center bg-success p-3 text-white mb-3">
+            {{ messages }}
+        </div>
+    {% endfor %}
+
     {# {{ dump(colonnes) }} #}
 
-    <table class="table table-striped">
-        <tr>
-        {# colonnes: objet (BackOfficeController) qui contient tous les noms des champs/colonnes de la table sql Article #}
-        {% for data in colonnes %}
+    <table class="table table-striped" id="table-backoffice">
+        <thead>
+            <tr>
+            {# colonnes: objet (BackOfficeController) qui contient tous les noms des champs/colonnes de la table sql Article #}
+            {% for data in colonnes %}
 
-            {% if data != 'id' %}
-                
-                {# capitalize: filtre Twig permettant de mettre la 1ère lettre de la chaine en majuscule #}
-                <th class="text-center">{{ data|capitalize }}</th>
+                {% if data != 'id' %}
+                    
+                    {# capitalize: filtre Twig permettant de mettre la 1ère lettre de la chaine en majuscule #}
+                    <th class="text-center table-success">{{ data|capitalize }}</th>
 
-            {% endif %}
+                {% endif %}
 
-        {% endfor %}
-            <th class="text-center">Cat.</th>
-            <th class="text-center">Nb Comm.</th>
-            <th class="text-center">Action</th>
-        </tr>
-        {% for art in articles %}
-
-            <tr class="text-center">
-                <td>{{ art.titre }}</td>
-                <td>{{ art.contenu|striptags|slice(0, 60) }}...</td>
-                <td>
-                    {% if art.photo != null %}
-                        <img src="{{ asset('uploads/photos/' ~ art.photo) }}" alt="" class="col-3 img-responsive">
-                    {% endif %}                
-                </td>
-                <td>{{ art.date|date("Y-m-d") }}</td>
-                <td>{{ art.category.titre }}</td>
-                <td>{{ art.commentaires|length }}</td>
-                <td>
-                    <a href="" class="badge"><i class="bi bi-pencil-fill text-success" style="font-size: 24px !important;"></i></a>&nbsp;
-                    <a href="" class="badge"><i class="bi bi-trash-fill text-danger"  style="font-size: 24px !important;"></i></a>
-                </td>
-
+            {% endfor %}
+                <th class="text-center table-success">Cat.</th>
+                <th class="text-center table-success">Nb Comm.</th>
+                <th class="text-center table-success">Action</th>
             </tr>
-            
-        {% endfor %}
+        </thead>
+        <tbody>
+            {% for art in articles %}
+
+                <tr class="text-center align-middle">
+                    <td>{{ art.titre }}</td>
+                    <td>
+                        {% if art.contenu|length < 60 %}
+                            {{ art.contenu|striptags }}
+                        {% else %}
+                            {{ art.contenu|striptags|slice(0, 60) }}...
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if art.photo != null %}
+                            <img src="{{ asset('uploads/photos/' ~ art.photo) }}" alt="" class="col-3 img-responsive">
+                        {% endif %}                
+                    </td>
+                    <td>{{ art.date|date("Y-m-d") }}</td>
+                    <td>{{ art.category.titre }}</td>
+                    <td>{{ art.commentaires|length }}</td>
+                    <td>
+                        <a href="{{ path('bo_update_article', {'id': art.id}) }}" class="badge"><i class="bi bi-pencil-fill text-success" style="font-size: 24px !important;"></i></a>&nbsp;
+                        <a href="{{ path('bo_article_remove', {'id': art.id}) }}" onclick="return(confirm('Voulez-vous vraiment supprimer l\'article {{ art.id }} ?'));" class="badge"><i class="bi bi-trash-fill text-danger" style="font-size: 24px !important;"></i></a>
+                    </td>
+
+                </tr>
+                
+            {% endfor %}
+        </tbody>
     </table>
 
 {% endblock %}
