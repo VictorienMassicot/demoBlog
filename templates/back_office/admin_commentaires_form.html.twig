@@ -1,0 +1,25 @@
+{% extends "base_admin.html.twig" %}
+
+{% block title %}
+    Blog Symfony | BO Edit commentaire
+{% endblock %}
+
+{% block body %}
+
+{# <pre>
+    {{ dump(formComments) }}
+</pre> #}
+    
+    <h1 class="text-center mt-5">Modifier commentaire</h1>
+
+    {{ form_start(formComments, {'attr': {'class': 'col-6 mx-auto'}}) }}
+
+       {{ form_row(formComments.auteur) }}
+
+       {{ form_row(formComments.commentaire) }}
+
+       <button class="btn btn-outline-dark">Modifier</button>
+
+    {{ form_end(formComments) }}
+
+{% endblock %}

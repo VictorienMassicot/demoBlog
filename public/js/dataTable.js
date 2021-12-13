@@ -18,4 +18,14 @@ $(document).ready(function() {
             { 'bSortable': false, 'aTargets': [ 1,3 ] }
         ]
     });
+
+    $('#table-comment').DataTable({
+        language: {
+            // url: http://localhost/PHP/10-boutique + js/dataTables.french.json
+            url: '/dataTables.french.json'
+        },
+        "aoColumnDefs": [
+            { 'bSortable': false, 'aTargets': [ 0,4 ] }
+        ]
+    });
 });

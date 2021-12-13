@@ -7,6 +7,7 @@ use App\Form\ArticleType;
 use App\Form\CommentsType;
 use App\Entity\Commentaire;
 use App\Repository\ArticleRepository;
+use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use phpDocumentor\Reflection\Types\Integer;
@@ -30,7 +31,18 @@ class BlogController extends AbstractController
         ]);
     }
 
+    // cette méthode permet de selectionner toute les catégories de la BDD amis ne possède pas de route, les catégories seront intégrées dans base.html.twig
+   public function allCategory(CategoryRepository $repoCategory)
+    {
+        $categorys = $repoCategory->findAll();
+
+        return $this->render('blog/categorys_list.html.twig', [
+            'categorys' => $categorys
+        ]);
+    }
+
     #[Route('/blog', name: 'blog')]
+    #[Route('/blog/categorie/{id}', name: 'blog_categorie')]
     public function blog(ArticleRepository $repoArticle): Response
     {
         /*
@@ -217,15 +229,21 @@ class BlogController extends AbstractController
 
         $comments = new Commentaire;
 
-        $formComments = $this->createForm(CommentsType::class, $comments);
+        $formComments = $this->createForm(CommentsType::class, $comments, [
+            'commentFormFront' => true
+        ]);
 
         $formComments->handleRequest($request);
 
         if($formComments->isSubmitted() && $formComments->isValid())
         {
+            $user = $this->getUser();
+
             $comments->setDate(new \DateTime());
 
             $comments->setArticle($article);
+
+            $comments->setAuteur($user->getPrenom() . ' ' . $user->getNom());
 
             $manager->persist($comments);
             $manager->flush();
@@ -239,7 +257,8 @@ class BlogController extends AbstractController
 
         return $this->render('blog/blog_show.html.twig', [
             'articles' => $article,
-            'formComments' => $formComments->createView()
+            'formComments' => $formComments->createView(),
+            'user' => $user
         ]);
     }
 }

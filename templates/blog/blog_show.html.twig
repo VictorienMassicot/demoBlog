@@ -62,9 +62,7 @@
 
         {% if app.user %}
             {{ form_start(formComments) }}
-
-                {{ form_row(formComments.auteur) }}
-
+            
                 {{ form_row(formComments.commentaire) }}
 
                 <button type="submit" class="btn btn-dark">Envoyer</button>
