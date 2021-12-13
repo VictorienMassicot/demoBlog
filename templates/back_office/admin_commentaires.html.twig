@@ -1,0 +1,39 @@
+{% extends "base_admin.html.twig" %}
+
+{% block title %}
+    Blog Symfony | BO Commentaires
+{% endblock %}
+
+{% block body %}
+
+
+
+    <table class="table table-striped text-center" id="table-comment">
+        <thead>
+            <tr>
+            {% for data in colonnes %}
+                {% if data != 'id' %}
+                    <th>{{ data }}</th>
+                {% endif %}
+            {% endfor %}
+            <th>Article</th>
+            <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for value in comments %}
+                <tr>
+                    <td>{{ value.commentaire|striptags }}</td>
+                    <td>{{ value.auteur }}</td>
+                    <td>{{ value.date|date('Y-m-d') }}</td>
+                    <td><a href="{{ path('blog_show', {'id': value.article.id}) }}">{{ value.article.titre }}</a></td>
+                    <td>
+                        <a href="{{ path('bo_comments_edit', {'id': value.id}) }}" class="badge"><i class="bi bi-pencil-fill text-success" style="font-size: 24px !important;"></i></a>&nbsp;
+                        <a href="{{ path('bo_comments_remove', {'id': value.id}) }}" onclick="return(confirm('Voulez-vous vraiment supprimer l\'article {{ value.id }} ?'));" class="badge"><i class="bi bi-trash-fill text-danger" style="font-size: 24px !important;"></i></a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

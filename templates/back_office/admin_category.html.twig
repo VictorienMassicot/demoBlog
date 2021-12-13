@@ -5,6 +5,15 @@
 {% endblock %}
 
 {% block body %}
+
+    {% for label, messages in app.flashes(['success', 'danger']) %}
+        {% for message in messages %}
+            {# on se sert de l'identifiant du message (success, danger) pour les intégrer comme class bootstrap #}
+            <div class="col-6 mx-auto text-center bg-{{ label }} p-3 text-white mb-3">
+            {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
     
     <table id="table-category" class="table table-striped">
         <thead>

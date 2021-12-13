@@ -65,34 +65,35 @@
             <span class="fs-4">Sidebar</span>
         </a>
         <hr>
+        {% set route_name = app.request.attributes.get('_route') %}
         <ul class="nav nav-pills flex-column mb-auto">
             <li class="nav-item">
-                <a href="{{ path('app_admin') }}" class="nav-link text-white btnhover" aria-current="page">
+                <a href="{{ path('app_admin') }}" class="nav-link text-white btnhover {% if route_name == "app_admin" %} active {% endif %}" aria-current="page">
                     <i class="bi bi-house"></i> Home
                 </a>
             </li>
             <li>
-                <a href="{{ path('bo_article') }}" class="nav-link text-white btnhover">
+                <a href="{{ path('bo_article') }}" class="nav-link text-white btnhover {% if route_name == "bo_article" %} active {% endif %}">
                     <i class="bi bi-newspaper"></i> Articles
                 </a>
             </li>
             <li>
-                <a href="{{ path('bo_category') }}" class="nav-link text-white btnhover">
+                <a href="{{ path('bo_category') }}" class="nav-link text-white btnhover {% if route_name == "bo_category" %} active {% endif %}">
                     <i class="bi bi-card-list"></i> Catégories
                 </a>
             </li>
             <li>
-                <a href="{{ path('bo_add_article') }}" class="nav-link text-white btnhover">
+                <a href="{{ path('bo_comments') }}" class="nav-link text-white btnhover {% if route_name == "bo_comments" %} active {% endif %}">
                     <i class="bi bi-chat-left-dots"></i> Commentaires
                 </a>
             </li>
             <li>
-                <a href="{{ path('bo_add_article') }}" class="nav-link text-white btnhover">
+                <a href="{{ path('bo_add_article') }}" class="nav-link text-white btnhover {% if route_name == "bo_add_article" %} active {% endif %}">
                     <i class="bi bi-plus-circle"></i> Nouvel article
                 </a>
             </li>
             <li>
-                <a href="{{ path('bo_users') }}" class="nav-link text-white btnhover">
+                <a href="{{ path('bo_users') }}" class="nav-link text-white btnhover {% if route_name == "bo_users" %} active {% endif %}">
                     <i class="bi bi-person"></i> Users
                 </a>
             </li>
