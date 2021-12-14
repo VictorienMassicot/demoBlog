@@ -1,0 +1,23 @@
+{% extends "base_admin.html.twig" %}
+
+{% block title %}
+    Blog Symfony | BO Edit utilisateur
+{% endblock %}
+
+{% block body %}
+    
+    <h1 class="text-center mt-5">Modification rôles utilisateur</h1>
+
+    {# <pre>
+        {{ dump(formEditUser) }}
+    </pre> #}
+
+    {{ form_start(formEditUser) }}
+
+        {{ form_row(formEditUser.roles) }}
+
+        <button class="btn btn-dark">Modifier</button>
+
+    {{ form_end(formEditUser) }}
+
+{% endblock %}

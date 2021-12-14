@@ -28,4 +28,24 @@ $(document).ready(function() {
             { 'bSortable': false, 'aTargets': [ 0,4 ] }
         ]
     });
+
+    $('#table-users').DataTable({
+        language: {
+            // url: http://localhost/PHP/10-boutique + js/dataTables.french.json
+            url: '/dataTables.french.json'
+        },
+        "aoColumnDefs": [
+            { 'bSortable': false, 'aTargets': [ 7 ] }
+        ]
+    });
+
+    $('#table-profil').DataTable({
+        language: {
+            // url: http://localhost/PHP/10-boutique + js/dataTables.french.json
+            url: '/dataTables.french.json'
+        },
+        "aoColumnDefs": [
+            { 'bSortable': false, 'aTargets': [ 3 ] }
+        ]
+    });
 });

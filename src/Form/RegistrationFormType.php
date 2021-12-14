@@ -10,6 +10,8 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -149,6 +151,22 @@ class RegistrationFormType extends AbstractType
                 ])
             ;
         }
+        elseif($options['userBack'] == true)
+        {
+            // Nous definissons le champs 'roles' en CollectionType afin de renvoyer dans la bdd un array
+            // ChoiceType permet de définir une liste déroulante
+            // entry_options permet de définir les options de selecteurs
+            $builder
+            ->add('roles', ChoiceType::class, [
+                'choices' => [
+                    'utilisateur' => '',
+                    'administrateur' => 'ROLE_ADMIN'
+                ],
+                'expanded' => true,
+                'multiple' => true,
+                'label' => "Définir le role de l'utilisateur"
+            ]);
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -156,7 +174,8 @@ class RegistrationFormType extends AbstractType
         $resolver->setDefaults([
             'data_class' => User::class,
             'userRegistration' => false,
-            'userUpdate' => false
+            'userUpdate' => false,
+            'userBack' => false
         ]);
     }
 }

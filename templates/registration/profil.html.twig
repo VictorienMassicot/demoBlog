@@ -34,7 +34,29 @@
 
     <div class="my-1">Code postal : {{ user.codePostal }}</div>
 
-
 </div>
+
+<h3 class="mt-5">Derniers articles de l'utilisateur</h3>
+
+<table class="table table-borderless my-5" id="table-profil">
+    <thead>
+        <tr class="text-center">
+            <th>Titre</th>
+            <th>Catégorie</th>
+            <th>Date</th>
+            <th>Edit</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for data in user.article %}
+            <tr>
+                <td><a href="{{ path('blog_show', {'id': data.id}) }}" class="link-secondary">{{ data.titre }}</a></td>
+                <td class="text-center"><a href="{{ path('blog_categorie', {'id': data.category.id }) }}" class="link-secondary">{{ data.category.titre }}</a></td>
+                <td class="text-center">{{ data.date|date('d/m/Y à H:i:s') }}</td>
+                <td class="text-center"><a href=""><i class="bi bi-pencil-fill text-success" style="font-size: 24px !important;"></i></a></td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
 
 {% endblock %}

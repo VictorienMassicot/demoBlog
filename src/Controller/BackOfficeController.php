@@ -9,6 +9,7 @@ use App\Entity\Commentaire;
 use App\Form\ArticleType;
 use App\Form\CategoryType;
 use App\Form\CommentsType;
+use App\Form\RegistrationFormType;
 use App\Repository\UserRepository;
 use App\Repository\ArticleRepository;
 use App\Repository\CategoryRepository;
@@ -74,6 +75,46 @@ class BackOfficeController extends AbstractController
         return $this->render('back_office/admin_users.html.twig', [
             'colonnes' => $colonnes,
             'utilisateurs' => $user
+        ]);
+    }
+
+    #[Route('/admin/users/{id}/edit', name: 'bo_users_edit')]
+    #[Route('/admin/users/{id}/remove', name: 'bo_users_remove')]
+    public function editRoleUser(EntityManagerInterface $manager, User $utilisateurs, Request $request): Response
+    {
+        $formEditUser = $this->createForm(RegistrationFormType::class, $utilisateurs, [
+            'userBack' => true
+        ]);
+
+        $formEditUser->handleRequest($request);
+        // dd($formEditUser);
+
+        if($formEditUser->isSubmitted() && $formEditUser->isValid())
+        {
+            $id = $utilisateurs->getId();
+
+            $this->addFlash('success', "L'utilisateur $id a été modifié avec succès");
+
+            $manager->persist($utilisateurs);
+            $manager->flush();
+
+            return $this->redirectToRoute('bo_users');
+        }
+        else // sinon, aucun paramètres dans l'URL, alors on execute une requete de suppression
+        {
+            $infos = $utilisateurs->getPrenom() . " " . $utilisateurs->getNom();
+
+            $manager->remove($utilisateurs);
+            $manager->flush();
+
+            $this->addFlash('success', "Le rôle de l'utilisateur $infos a été supprimé avec succès.");
+
+            return $this->redirectToRoute('bo_users');
+        }
+
+
+        return $this->render('back_office/admin_user_edit.html.twig', [
+            'formEditUser' => $formEditUser->createView()
         ]);
     }
 
@@ -242,18 +283,6 @@ class BackOfficeController extends AbstractController
             'editMode' => $category->getId()
         ]);
     }
-
-    /*
-        Exo : Affichage et suppression des commentaires
-        1. Création d'une nouvelle route '/admin/commentaires' (name : app_admin_commentaires)
-        2. Création d'une nouvelle méthode adminCommentaires()
-        3. Création d'un nouveau template 'admin_commentaires.html.twig'
-        4. Séléctionner les noms/champs/colonnes de la table 'Comment' et les afficher sur le template
-        5. Séléctionner l'ensemble de la table 'Comment' et afficher les données sous forme de tableau (prévoir un lien modification/suppression)
-        6. Mettre en place 'dataTable' pour pouvoir filtrer/rechercher des commentaires
-        7. Créer une nouvelle route (sur la même méthode) '/admin/comment/{id}/remove' (name : app_admin_comment_remove)
-        8. Réaliser le traitement permettant de supprimer un commentaire dans la BDD
-    */
 
     #[Route('/admin/commentaires', name:'bo_comments')]
     #[Route('/admin/commentaires/{id}/remove', name: 'bo_comments_remove')]

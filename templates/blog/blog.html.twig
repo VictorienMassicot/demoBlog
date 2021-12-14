@@ -28,7 +28,7 @@
             <div class="col-{{ col }} p-4 d-flex flex-column position-static">
                 <strong class="d-inline-block mb-2 text-primary">{{ data.category.titre }}</strong>
                 <h3 class="mb-0">{{ data.titre }}</h3>
-                <small class="mb-1 text-muted">Publié le {{ data.date|date("Y-m-d") }}</small>
+                <small class="mb-1 text-muted">Publié par {{ data.user.prenom }} {{ data.user.nom }} le {{ data.date|date("Y-m-d") }}</small>
                 <p class="card-text mb-auto">{{ data.contenu|slice(0, 40)|striptags }} ...</p>
 
                 {# On fournit à la route l'id de l'article à transmettre dans l'url #}
