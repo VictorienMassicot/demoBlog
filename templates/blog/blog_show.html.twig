@@ -29,7 +29,7 @@
             <div class="col-{{ col }} p-4 d-flex flex-column position-static">
                 <strong class="d-inline-block mb-2 text-primary">{{ articles.category.titre }}</strong>
                 <h3 class="mb-0">{{ articles.titre }}</h3>
-                <small class="mb-3 text-muted">Publié le {{ articles.date|date('Y-m-d') }}</small>
+                <small class="mb-3 text-muted">Publié par {{ articles.user.prenom }} {{ articles.user.nom }} le {{ articles.date|date('Y-m-d') }}</small>
 
                 <p class="card-text mb-auto">{{ articles.contenu|raw }}</p>
 

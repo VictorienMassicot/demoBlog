@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Entity\Category;
 use App\Form\ArticleType;
 use App\Form\CommentsType;
 use App\Entity\Commentaire;
@@ -43,7 +44,7 @@ class BlogController extends AbstractController
 
     #[Route('/blog', name: 'blog')]
     #[Route('/blog/categorie/{id}', name: 'blog_categorie')]
-    public function blog(ArticleRepository $repoArticle): Response
+    public function blog(ArticleRepository $repoArticle, Category $category): Response
     {
         /*
             Injections de dépendances : c'est un fondement de Symfony, ici notre méthode DEPEND de la classe ArticleRepository pour fonctionner correctement
@@ -64,12 +65,22 @@ class BlogController extends AbstractController
         // dump(), dd() : outil de debug de Symfony
         // dump($repoArticle);
 
+        if($category)
+        {
+            $articles = $category->getArticles();
+        }
+        else
+        {
+            $articles = $repoArticle->findAll();
+        }
+
         // findAll() : méthode issue de la classe ArticleRepository permettant de selectionner l'ensemble de la table SQL et de récupérer un tableau multi contenant l'ensemble des articles stocké en BDD
-        $articles = $repoArticle->findAll(); // SELECT * FROM article + fetchAll()
+        // $articles = $repoArticle->findAll(); // SELECT * FROM article + fetchAll()
         // dd($articles);
 
         return $this->render('blog/blog.html.twig', [
-            'articles' => $articles // on transmet au template les articles selectionnés en BDD afin que twig traite l'affichage
+            'articles' => $articles, // on transmet au template les articles selectionnés en BDD afin que twig traite l'affichage
+            'category' => $category
         ]);
     }
 
@@ -136,8 +147,14 @@ class BlogController extends AbstractController
             if(!$article->getId())
                 $article->setDate(new \DateTime());
 
-            // DEBUT TRAITEMENT PHOTO
+            // On relie l'article publié à l'utilisateur en BDD
+            // On relie la clé étrangère dans la BDD
+            // setUser() attend en argument l'objet App\Entity\User
+            $article->setUser($this->getUser());
+            dd($article);
 
+            // DEBUT TRAITEMENT PHOTO
+            // On récupère toute les informations de l'image uploadé dans le formulaire
             $photo = $formArticle->get('photo')->getData();
 
             if($photo) // si une photo est uploadé dans le formulaire, on entre dans le IF et on traite l'image
@@ -261,4 +278,11 @@ class BlogController extends AbstractController
             'user' => $user
         ]);
     }
+
+    /*
+        Exo: Le but est de relier les utilisateurs aux articles, lorsque l'internaute poste un article, il faut une relation entre Article et User
+        Créer une nouvelle propriété dans l'entité user 'article' et fait une relation OneToMany, cette propriété peut etre null
+        Lorsque l'internaute poste un nouvel article, faites en sorte de renseigner la clé étrangère 'user_id' afin que l'article soit relié à l'utilisateur connecté
+        Dans la page profil de l'utilisateur, afficher dans une liste/table tous les articles postés par l'internaute 
+    */
 }

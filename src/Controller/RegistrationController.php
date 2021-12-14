@@ -4,12 +4,14 @@ namespace App\Controller;
 
 
 use App\Entity\User;
+use App\Entity\Article;
 use App\Form\RegistrationFormType;
+use App\Repository\ArticleRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use phpDocumentor\Reflection\PseudoTypes\True_;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use phpDocumentor\Reflection\PseudoTypes\True_;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -67,7 +69,7 @@ class RegistrationController extends AbstractController
     */
 
     #[Route('/profil', name:'app_profil')]
-    public function userProfil()
+    public function userProfil(): Response
     {
         // Si getUser() est null, et ne renvoi aucune données, cela veut dire que l'internaute n'est pas authentifié, il n'a rien à faire sur le route '/profil', on le redirige vers la route de connexion '/login'
         if(!$this->getUser())
@@ -76,7 +78,6 @@ class RegistrationController extends AbstractController
         }
 
         $user = $this->getUser();
-
         // dd($user);
 
         return $this->render('registration/profil.html.twig', [
